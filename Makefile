@@ -24,7 +24,7 @@ package-ubuntu: build
 	cp debian/changelog packages/debian/usr/share/doc/ices/changelog.Debian
 	gzip -9 packages/debian/usr/share/doc/ices/changelog.Debian
 	cp debian/copyright packages/debian/usr/share/doc/ices/
-	dpkg -b packages/debian ices_$(VERSION)-`uname -m`.deb
+	fakeroot dpkg -b packages/debian ices_$(VERSION)-`uname -m`.deb
 
 clean:
 	rm -rf ices src/*.o src/*/*.o *.deb packages/debian/usr
