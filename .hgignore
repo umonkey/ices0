@@ -1,3 +1,4 @@
 syntax: glob
 *.o
 ices
+doc/ices.1
