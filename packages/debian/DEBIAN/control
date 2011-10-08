@@ -1,0 +1,15 @@
+Package: ices
+Version: 0.4.1-0monkey1
+Section: sound
+Priority: optional
+Maintainer: Justin Forest <hex@umonkey.net>
+Architecture: all
+Essential: no
+Depends: libc6 (>= 2.4), libfaad2, libmp3lame0, libmp4v2-0 (>= 1:1.6dfsg), libogg0 (>= 1.0rc3), libperl5.10 (>= 5.10.1), libpython2.6 (>= 2.6), libshout3, libspeex1 (>= 1.2~beta3-1), libtheora0 (>= 0.0.0.alpha7.dfsg), libvorbis0a (>= 1.1.2), libvorbisfile3 (>= 1.1.2), libxml2 (>= 2.7.4)
+Homepage: http://code.umonkey.net/ices0
+Description: streaming source for Icecast 2
+ IceS 0.x is used to source Icecast 2 streaming audio servers with MP3 audio
+ streams.  It supports both live audio input from a soundcard and re-encoding
+ of MP3 files from a playlist.
+ 
+ This is an unofficial fork with ReplayGain support added.

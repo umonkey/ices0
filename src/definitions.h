@@ -113,7 +113,7 @@
 #ifdef VERSION
 # undef VERSION
 #endif
-#define VERSION "0.4-ardj"
+#define VERSION "0.4.1-0umonkey1"
 
 #ifndef __USE_MISC
 # define __USE_MISC
