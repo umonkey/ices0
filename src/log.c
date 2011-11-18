@@ -55,15 +55,13 @@ ices_log_shutdown (void)
 void
 ices_log_daemonize (void)
 {
-  void *ret;
-
 	close (0); 
 	close (1); 
 	close (2);
 
-	ret = freopen ("/dev/null", "r", stdin);
-	ret = freopen ("/dev/null", "w", stdout);
-	ret = freopen ("/dev/null", "w", stderr);
+	freopen ("/dev/null", "r", stdin);
+	freopen ("/dev/null", "w", stdout);
+	freopen ("/dev/null", "w", stderr);
 
 	ices_log_reopen_logfile ();
 }
