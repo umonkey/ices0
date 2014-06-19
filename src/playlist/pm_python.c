@@ -24,7 +24,7 @@
 #ifdef _REENTRANT
 #undef _REENTRANT
 #endif
-#include <python2.6/Python.h>
+#include <python2.7/Python.h>
 
 extern ices_config_t ices_config;
 

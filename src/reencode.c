@@ -29,6 +29,8 @@
 
 extern ices_config_t ices_config;
 
+static hip_t hip = 0;
+
 /* Global function definitions */
 
 /* Initialize the reencoding engine in ices, initialize
@@ -62,16 +64,18 @@ ices_reencode_reset (input_stream_t* source)
 
 #ifdef HAVE_LAME_DECODE_EXIT
   if (!init_decoder) {
-    if (lame_decode_exit () < 0) {
+    if (hip_decode_exit (hip) < 0) {
       ices_log ("LAME: error shutting down decoder");
       ices_setup_shutdown ();
     }
+	hip = 0;
     init_decoder = 1;
   }
 #endif
 
   if (init_decoder) {
-    if (lame_decode_init () < 0) {
+	hip = hip_decode_init();
+	if (hip == 0) {
       ices_log ("LAME: error initialising decoder");
       ices_setup_shutdown ();
     }
@@ -144,7 +148,7 @@ int
 ices_reencode_decode (unsigned char* buf, size_t blen, size_t olen,
               int16_t* left, int16_t* right)
 {
-  int samples = lame_decode (buf, blen, left, right);
+  int samples = hip_decode (hip, buf, blen, left, right);
   return samples;
 }
 
