@@ -142,6 +142,11 @@ ices_vorbis_readpcm (input_stream_t* self, size_t olen, int16_t* left,
   int len;
   int i;
 
+  if (!vorbis_data) {
+    ices_log_error("Attempting to read from a closed source.");
+    return -1;
+  }
+
   /* refill buffer if necessary */
   if (! vorbis_data->samples) {
     vorbis_data->offset = 0;
@@ -195,10 +200,17 @@ static int
 ices_vorbis_close (input_stream_t* self)
 {
   ices_vorbis_in_t* vorbis_data = (ices_vorbis_in_t*) self->data;
+  if (!vorbis_data) {
+    ices_log_error("Attempting to close a closed source.");
+    return 0;
+  }
 
   ov_clear (vorbis_data->vf);
   free (vorbis_data->vf);
+  vorbis_data->vf = 0;
+
   free (vorbis_data);
+  self->data = 0;
 
   return 0;
 }

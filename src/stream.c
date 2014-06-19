@@ -106,15 +106,23 @@ ices_stream_loop (ices_config_t* config)
       continue;
     }
 
-    if (!source.read)
-      for (stream = config->streams; stream; stream = stream->next)
+    if (!source.read) {
+      rc = 0;  // set on failure
+      for (stream = config->streams; stream; stream = stream->next) {
         if (!stream->reencode) {
-          ices_log ("Cannot play %s without reencoding", source.path);
-          source.close (&source);
-          ices_util_free (source.path);
-          consecutive_errors++;
-          continue;
+	  rc = 1;
+	  break;
 	}
+      }
+
+      if (rc != 0) {
+	ices_log ("Cannot play %s without reencoding (consider enabling <Reencode> in ices.conf)", source.path);
+	source.close (&source);
+	ices_util_free (source.path);
+	consecutive_errors++;
+	continue;
+      }
+    }
 
     rc = stream_send (config, &source);
     source.close (&source);
@@ -206,20 +214,34 @@ stream_send (ices_config_t* config, input_stream_t* source)
     if (source->read) {
       len = source->read (source, ibuf, sizeof (ibuf));
 #ifdef HAVE_LIBLAME
-      if (decode)
+      if (decode) {
         samples = ices_reencode_decode (ibuf, len, sizeof (left), left, right);
+	if (samples < 0) {
+	  ices_log_debug("ices_reencode_decode reports %d samples.", samples);
+	  goto err;
+	}
+      }
     } else if (source->readpcm) {
       len = samples = source->readpcm (source, sizeof (left), left, right);
+      if (samples < 0) {
+	ices_log_debug("source->readpcm returned %d samples!", samples);
+	goto err;
+      }
 #endif
     }
 
-    rg_apply(left, samples);
-    rg_apply(right, samples);
+    if (samples > 0) {
+      rg_apply(left, samples);
+      rg_apply(right, samples);
+    } else if (samples < 0) {
+      ices_log_debug("Decoder reported error %d.", samples);
+      goto err;
+    }
 
 #ifdef HAVE_LIBLAME
     /* run output through plugin */
     for (plugin = config->plugins; plugin; plugin = plugin->next)
-      if (samples)
+      if (samples > 0)
 	samples = plugin->process(samples, left, right);
 #endif
 

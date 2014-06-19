@@ -1,5 +1,8 @@
+0.6	2014-06-19
+	* Updated to compile with Python 2.7, new liblame.
+	* Fixed a segfault while trying to play multiple unplayable files in a row.
 0.5     2010-10-05
-  * ReplayGain support added.
+	* ReplayGain support added.
 0.4     2004-08-28
 	* FLAC transcoding support.
 	* MP4 transcoding support added via libfaad.
