@@ -6,8 +6,8 @@ VERSION = 0.4.1-0umonkey2
 build: ices man
 
 install: build
-	sudo install ices /usr/local/bin/ices
-	sudo install doc/ices.1 /usr/share/man/man1/ices.1
+	install ices /usr/local/bin/ices
+	install doc/ices.1 /usr/share/man/man1/ices.1
 
 package-ubuntu: build
 	rm -rf packages/debian/usr
