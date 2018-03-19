@@ -74,7 +74,7 @@
 #define HAVE_STRING_H 1
 
 /* Define to 1 if you have the <sys/signal.h> header file. */
-#define HAVE_SYS_SIGNAL_H 1
+// #define HAVE_SYS_SIGNAL_H 1
 
 /* Define to 1 if you have the <sys/socket.h> header file. */
 #define HAVE_SYS_SOCKET_H 1

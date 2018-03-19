@@ -44,7 +44,7 @@
 #define HAVE_STRFTIME 1
 #define HAVE_STRINGS_H 1
 #define HAVE_STRING_H 1
-#define HAVE_SYS_SIGNAL_H 1
+// #define HAVE_SYS_SIGNAL_H 1
 #define HAVE_SYS_SOCKET_H 1
 #define HAVE_SYS_STAT_H 1
 #define HAVE_SYS_TIME_H 1
